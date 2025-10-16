@@ -14,7 +14,7 @@ Download from the [official v0.3.3 release](https://github.com/abhinit21/nearby/
 | --- | --- |
 | `Nearby-0.3.3-macOS-universal.dmg` | Recommended: open the disk image and drag `Nearby.app` into Applications |
 | `Nearby-0.3.3-macOS-universal.zip` | Alternative: expand the archive and move `Nearby.app` into Applications |
-| `SHA256SUMS.txt` | SHA-256 hashes of both downloads |
+| `SHA256SUMS.txt` | SHA-256 hashes of the downloads and build information |
 | `BUILD-INFO.txt` | Source commit, architecture, toolchain and signing status |
 
 Quit any running copy of Nearby before replacing it. Eject the disk image after
@@ -108,6 +108,19 @@ and linked libraries, verify nested signatures and pinned Android payloads, and
 preserve the original license texts. Check the DMG and ZIP after packaging and
 generate `SHA256SUMS.txt` from those final files. Do not mutate assets after
 generating their hashes.
+
+After committing and pushing the version tag, run the build workflow and download
+its verified artifact. Replace `RUN_ID` with the completed release workflow run:
+
+```sh
+gh workflow run release.yml --ref v0.3.3
+gh run list --workflow release.yml
+gh run download RUN_ID -n nearby-macOS-release -D .build/nearby/release-assets
+```
+
+The workflow builds and uploads assets for review; it does not create or publish
+a GitHub Release. Review `BUILD-INFO.txt`, run the checksum check, and publish the
+version tag as a prerelease with the verified files attached.
 
 Publish only the versioned DMG, ZIP, checksum and build-information files listed above. The app
 contains the project MIT license and third-party notices. Build directories,

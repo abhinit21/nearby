@@ -52,7 +52,7 @@ while IFS= read -r LIBRARY; do
         /System/Library/*|/usr/lib/*|@rpath/libswift*.dylib) ;;
         *) echo "Unexpected non-system dynamic library: $LIBRARY" >&2; exit 1 ;;
     esac
-done < <(/usr/bin/otool -L "$APP_PATH/Contents/MacOS/Nearby" | /usr/bin/awk '$1 ~ /^\// || $1 ~ /^@/ { if ($1 !~ /:$/) print $1 }')
+done < <(/usr/bin/otool -L "$APP_PATH/Contents/MacOS/Nearby" | /usr/bin/awk '/^\t/ { print $1 }')
 ADB_INFO="$("$RUNTIME_DIR/adb" version)"
 printf '%s\n' "$ADB_INFO"
 case "$ADB_INFO" in
