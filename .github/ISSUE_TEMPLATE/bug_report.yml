@@ -1,0 +1,31 @@
+name: Bug report
+description: Report a reproducible Nearby problem.
+body:
+  - type: markdown
+    attributes:
+      value: "Remove pairing codes, ADB keys, device serials, IP addresses, personal filenames and clipboard contents from reports. See SECURITY.md for vulnerability reporting."
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Nearby version or commit, macOS version, Mac architecture, phone model and Android version. Include Xcode version for build failures.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Relevant error text or screenshots, with personal information removed.

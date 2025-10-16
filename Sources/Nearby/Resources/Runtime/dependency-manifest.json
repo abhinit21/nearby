@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "name": "Android Debug Bridge",
+      "version": "37.0.1-15733141",
+      "file": "adb",
+      "architectures": ["arm64", "x86_64"],
+      "sha256BeforeSigning": "1811e253b21b12cbfda7201ebaf86c10e7ddcb5c606a7a81f7c82b4c429c2d3b",
+      "sourceArchive": "https://dl.google.com/android/repository/platform-tools_r37.0.1-darwin.zip",
+      "sourceArchiveSHA256": "ee39ad5967e95c2a07f04dbcbde96b1a0c916ba376096db5d2f498b7727a5d1d",
+      "officialArchiveSHA1": "6ae73f4de6452dc57e62ec02b68eed92a4c21661",
+      "officialRepository": "https://dl.google.com/android/repository/repository2-1.xml",
+      "channel": "stable (channel-0)",
+      "releaseNotes": "https://developer.android.com/tools/releases/platform-tools",
+      "noticeSHA256": "356cc66516060e4da6bdc53e6f0bbb8e8101673f326b73c68d535eddd04dd7b1",
+      "notices": "Licenses/android-platform-tools-NOTICE.txt"
+    },
+    {
+      "name": "scrcpy-server",
+      "version": "3.3.4",
+      "file": "scrcpy-server-v3.3.4",
+      "sha256": "8588238c9a5a00aa542906b6ec7e6d5541d9ffb9b5d0f6e1bc0e365e2303079e",
+      "source": "https://github.com/Genymobile/scrcpy/releases/download/v3.3.4/scrcpy-server-v3.3.4",
+      "license": "Apache-2.0",
+      "notices": "Licenses/scrcpy-LICENSE.txt"
+    },
+    {
+      "name": "Nearby safe transfer helper",
+      "version": "1",
+      "source": "scripts/nearby-transfer.c",
+      "sourceSHA256": "ee7e7e9a655f8d2c6276ce3cbba3b6885bde245a32c96747b4e541b766086bfb",
+      "build": "scripts/build-transfer-helper.sh (Android NDK 28.0.12674087, Android API 28)",
+      "androidMinimumAPI": 28,
+      "files": [
+        {"file": "nearby-transfer-arm64-v8a", "architecture": "arm64-v8a", "sha256": "8e8934b5600018f874b7b166c323a3e82d74e568d012772c880b670641611a3b"},
+        {"file": "nearby-transfer-x86_64", "architecture": "x86_64", "sha256": "b3c38025a59f5e8f0a2a6438a878a3a368e3f1e3fec1a36c9842cb77089a1f35"}
+      ],
+      "finalization": "renameat2(RENAME_NOREPLACE); unsupported filesystems fail without overwrite"
+    }
+  ]
+}

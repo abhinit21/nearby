@@ -1,0 +1,40 @@
+Nearby third-party software notices
+
+Nearby's macOS interface and native decoding/control client are implemented in
+Swift. The application bundles these unmodified upstream runtime components:
+
+1. Android Debug Bridge (adb), Android SDK Platform Tools 37.0.1-15733141
+   Copyright The Android Open Source Project and other contributors.
+   Source: https://android.googlesource.com/platform/packages/modules/adb/
+   Binary distribution: https://dl.google.com/android/repository/platform-tools_r37.0.1-darwin.zip
+   Bundled binary: Sources/Nearby/Resources/Runtime/adb
+   Complete upstream distribution notices and component license texts:
+   Sources/Nearby/Resources/Runtime/Licenses/android-platform-tools-NOTICE.txt
+
+   The bundled adb is the official macOS universal binary (arm64 and x86_64).
+   It links only macOS system libraries and frameworks. All relevant notices
+   from the official platform-tools archive are retained without modification.
+
+2. scrcpy-server 3.3.4
+   Copyright (C) 2018 Genymobile
+   Copyright (C) 2018-2025 Romain Vimont
+   License: Apache License, Version 2.0
+   Source: https://github.com/Genymobile/scrcpy/tree/v3.3.4
+   Binary: https://github.com/Genymobile/scrcpy/releases/download/v3.3.4/scrcpy-server-v3.3.4
+   Full license: Sources/Nearby/Resources/Runtime/Licenses/scrcpy-LICENSE.txt
+
+   The server is sent through ADB to the selected Android device and run only
+   for the mirroring session. Nearby does not bundle the scrcpy desktop client,
+   SDL, FFmpeg, or third-party desktop decoding libraries. The Swift client
+   implements the protocol documented by scrcpy and uses Apple's system media
+   frameworks to decode and present the stream.
+
+Runtime files, full license texts, and dependency-manifest.json are copied into
+Nearby.app/Contents/Resources/Runtime when packaging. The app executable and adb
+helper receive a local ad-hoc signature during the development build; this changes
+their Mach-O code-signature metadata, not their source or functionality. Runtime
+SHA-256 values in the manifest describe the original upstream files before signing.
+
+The Nearby app icon is original vector artwork generated with public AppKit APIs
+by scripts/generate-icon.swift. No Apple wallpaper, phone wallpaper, proprietary
+UI kit, or SF Symbol artwork is included in the application icon or resources.

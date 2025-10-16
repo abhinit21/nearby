@@ -1,0 +1,17 @@
+name: Feature request
+description: Propose an improvement to Nearby.
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What would this help you do?
+      description: Describe the task or problem you want to solve.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include alternatives or constraints that matter to you.
+    validations:
+      required: true

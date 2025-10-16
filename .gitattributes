@@ -1,0 +1,13 @@
+* text=auto
+*.swift text eol=lf
+*.sh text eol=lf
+*.c text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+
+# Pinned runtime and upstream license files must retain their exact bytes.
+Sources/Nearby/Resources/Runtime/** -text
+Sources/Nearby/Resources/Runtime/Licenses/** -whitespace

@@ -1,0 +1,25 @@
+# Generated Swift and application output
+.build/
+.swiftpm/
+dist/
+DerivedData/
+*.xcresult
+*.dSYM/
+
+# Local editor and macOS files
+.DS_Store
+*.xcuserstate
+xcuserdata/
+.idea/
+.vscode/
+
+# Local credentials, configuration and diagnostics
+.env
+.env.*
+!.env.example
+*.p12
+*.p8
+*.mobileprovision
+adbkey
+adbkey.pub
+*.log
