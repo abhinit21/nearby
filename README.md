@@ -8,14 +8,29 @@ AppKit provide pairing, a proportionally rounded display, a floating Liquid Glas
 control dock, text clipboard sharing and file transfers to Downloads.
 
 [Website](https://abhinit21.github.io/nearby/) ·
+[Download for Mac](https://github.com/abhinit21/nearby/releases/download/v0.3.3/Nearby-0.3.3-macOS-universal.dmg) ·
+[Installation guide](docs/install.md) ·
 [Build from source](#build-and-test) ·
 [Report an issue](https://github.com/abhinit21/nearby/issues/new/choose) ·
 [Contributing](CONTRIBUTING.md)
 
-**Development preview · 0.3.2.** This repository supports source builds and
-contributions. There is currently no Developer ID signed, Apple-notarized download.
-Build locally using the instructions below. The minimum versions are **macOS 26**
-and **Android 11**; real-device validation has focused on Pixel 9.
+**Development alpha · 0.3.3.** Download the ready-to-run app for **Apple silicon and
+Intel Macs running macOS 26 or later**. The app is ad-hoc signed, without a
+Developer ID certificate or Apple notarization, so macOS may block the first launch.
+Read the [installation and first-open guide](docs/install.md) before opening it.
+An **Android 11+** phone is required; real-device validation has focused on Pixel 9.
+
+## Install on your Mac
+
+1. [Download Nearby 0.3.3 for Mac](https://github.com/abhinit21/nearby/releases/download/v0.3.3/Nearby-0.3.3-macOS-universal.dmg).
+2. Open the DMG and drag **Nearby** into **Applications**. Eject the disk image.
+3. Open **Nearby** from Applications. If macOS blocks this unnotarized alpha, follow
+   the [first-open instructions](docs/install.md#first-open-and-macos-security) only
+   if you trust this release.
+
+No Xcode, source build, or separate Android tools installation is needed.
+[Release notes and other assets](https://github.com/abhinit21/nearby/releases/tag/v0.3.3)
+are available on GitHub.
 
 ## Features
 
@@ -28,7 +43,7 @@ and **Android 11**; real-device validation has focused on Pixel 9.
 
 ## Run and pair
 
-After building from source, open `dist/Nearby.app`. Nearby requires macOS 26 or later, an Android 11+ phone
+Open Nearby from Applications (or `dist/Nearby.app` after a source build). Nearby requires macOS 26 or later, an Android 11+ phone
 with Wireless debugging enabled, and a reachable local network shared by both.
 The packaged app includes its Android tools; no separate adb or scrcpy install is
 needed. Allow Local Network access when macOS asks.
@@ -120,15 +135,15 @@ for a debug app bundle. `swift build` also supports ordinary development; use th
 packaged app for normal UI and permission behavior.
 
 The default build targets the current Mac architecture and uses local ad-hoc
-signatures. Developer ID signing and Apple notarization are required for public
-download distribution with a trusted macOS installation experience. The source
+signatures. The public alpha uses ad-hoc signatures too; Developer ID signing and
+Apple notarization are still needed for a standard verified macOS installation. The source
 repository includes the pinned runtime binaries and their notices; Git LFS and
 separate ADB or scrcpy installations are not required.
 Android transfer helpers require Android NDK 28 only when rebuilding
 them with `scripts/build-transfer-helper.sh`; normal app builds use pinned copies.
 
-See [release preparation](docs/release.md) for signing, notarization and the checks
-required before offering a downloadable build. CI tests and packages the app on a
+See [release preparation](docs/release.md) for packaging, signing, notarization and
+release checks. CI tests and packages the app on a
 macOS runner; local signing verification does not establish notarization.
 
 ## Privacy and trust

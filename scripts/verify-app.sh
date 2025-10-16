@@ -5,6 +5,8 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 APP_PATH="${1:-$PROJECT_ROOT/dist/Nearby.app}"
 INFO_PATH="$APP_PATH/Contents/Info.plist"
 RUNTIME_DIR="$APP_PATH/Contents/Resources/Runtime"
+EXPECTED_ARCHITECTURES="${NEARBY_EXPECT_ARCHITECTURES:-}"
+EXPECTED_SDK_MAJOR="${NEARBY_EXPECT_SDK_MAJOR:-}"
 
 test -x "$APP_PATH/Contents/MacOS/Nearby"
 test -x "$RUNTIME_DIR/adb"
@@ -19,7 +21,38 @@ test -s "$APP_PATH/Contents/Resources/THIRD-PARTY-NOTICES.txt"
 test -s "$RUNTIME_DIR/dependency-manifest.json"
 /usr/bin/plutil -lint "$INFO_PATH"
 /usr/bin/codesign --verify --deep --strict --verbose=2 "$APP_PATH"
-/usr/bin/codesign --verify --strict "$RUNTIME_DIR/adb"
+while IFS= read -r -d '' ADB_HELPER; do
+    /usr/bin/codesign --verify --strict "$ADB_HELPER"
+    for ARCHITECTURE in $EXPECTED_ARCHITECTURES; do
+        /usr/bin/lipo -verify_arch "$ARCHITECTURE" "$ADB_HELPER"
+    done
+done < <(/usr/bin/find "$APP_PATH/Contents/Resources" -type f -name adb -print0)
+if [ -n "$EXPECTED_ARCHITECTURES" ]; then
+    for ARCHITECTURE in $EXPECTED_ARCHITECTURES; do
+        /usr/bin/lipo -verify_arch "$ARCHITECTURE" "$APP_PATH/Contents/MacOS/Nearby"
+        BUILD_INFO="$(/usr/bin/xcrun vtool -arch "$ARCHITECTURE" -show-build "$APP_PATH/Contents/MacOS/Nearby")"
+        printf '%s\n' "$BUILD_INFO"
+        MINIMUM_OS="$(printf '%s\n' "$BUILD_INFO" | /usr/bin/awk '$1 == "minos" { print $2 }')"
+        case "$MINIMUM_OS" in
+            26.0|26.0.0) ;;
+            *) echo "Unexpected $ARCHITECTURE deployment target: $MINIMUM_OS (expected 26.0)" >&2; exit 1 ;;
+        esac
+        if [ -n "$EXPECTED_SDK_MAJOR" ]; then
+            SDK_VERSION="$(printf '%s\n' "$BUILD_INFO" | /usr/bin/awk '$1 == "sdk" { print $2 }')"
+            [ "${SDK_VERSION%%.*}" = "$EXPECTED_SDK_MAJOR" ] || {
+                echo "Unexpected $ARCHITECTURE SDK: $SDK_VERSION (expected $EXPECTED_SDK_MAJOR.x)" >&2; exit 1;
+            }
+        fi
+    done
+    [ "$(/usr/libexec/PlistBuddy -c 'Print :LSMinimumSystemVersion' "$INFO_PATH")" = "26.0" ]
+fi
+# Public binaries must not depend on Homebrew or files outside the app and OS.
+while IFS= read -r LIBRARY; do
+    case "$LIBRARY" in
+        /System/Library/*|/usr/lib/*|@rpath/libswift*.dylib) ;;
+        *) echo "Unexpected non-system dynamic library: $LIBRARY" >&2; exit 1 ;;
+    esac
+done < <(/usr/bin/otool -L "$APP_PATH/Contents/MacOS/Nearby" | /usr/bin/awk '$1 ~ /^\// || $1 ~ /^@/ { if ($1 !~ /:$/) print $1 }')
 ADB_INFO="$("$RUNTIME_DIR/adb" version)"
 printf '%s\n' "$ADB_INFO"
 case "$ADB_INFO" in

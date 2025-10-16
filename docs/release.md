@@ -1,10 +1,49 @@
-# Release preparation
+# Releases
 
-The public repository distributes source, documentation, pinned Android runtime
-components and a static marketing page. The current build script produces a
-development app for the build Mac's architecture with local ad-hoc signatures.
-It does not create a Developer ID signed or notarized public download. CI verifies
-the bundle locally and does not publish application binaries.
+Nearby offers an **unsigned alpha** download for macOS 26 or later on Apple
+silicon and Intel Macs. The universal app bundles its Android tools; users do not
+need Xcode, Homebrew, ADB or a source checkout. The alpha uses ad-hoc code
+signatures for bundle integrity. It has **no Developer ID signature and is not
+notarized by Apple**, so macOS may block the first launch.
+
+## Install the alpha
+
+Download from the [official v0.3.3 release](https://github.com/abhinit21/nearby/releases/tag/v0.3.3):
+
+| Asset | Purpose |
+| --- | --- |
+| `Nearby-0.3.3-macOS-universal.dmg` | Recommended: open the disk image and drag `Nearby.app` into Applications |
+| `Nearby-0.3.3-macOS-universal.zip` | Alternative: expand the archive and move `Nearby.app` into Applications |
+| `SHA256SUMS.txt` | SHA-256 hashes of both downloads |
+| `BUILD-INFO.txt` | Source commit, architecture, toolchain and signing status |
+
+Quit any running copy of Nearby before replacing it. Eject the disk image after
+copying the app, then open **Applications → Nearby**. If macOS blocks it because
+the developer cannot be verified or Apple cannot check it, proceed only if you
+trust this release: open **System Settings → Privacy & Security**, find the
+Nearby notice, choose **Open Anyway**, and confirm **Open**. This is Apple's
+[documented per-app exception](https://support.apple.com/en-us/102445).
+
+If macOS reports malware, a damaged app or revoked authorization, stop and report
+the message; do not disable Gatekeeper. Managed Macs may prevent exceptions.
+Allow Local Network access when requested so Nearby can discover your phone.
+Enable Wireless debugging on an Android 11 or later phone, connect it to the same
+trusted network, and follow Nearby's pairing flow. Alpha limitations and known
+issues are listed with the release.
+
+For an optional integrity check, download `SHA256SUMS.txt` alongside the DMG or ZIP
+and run the matching command in that download directory:
+
+```sh
+shasum -a 256 Nearby-0.3.3-macOS-universal.dmg
+# Or, for the ZIP:
+shasum -a 256 Nearby-0.3.3-macOS-universal.zip
+```
+
+Compare the full hash with the matching filename in `SHA256SUMS.txt`. A checksum
+detects changed download bytes; it does not identify an Apple-verified developer
+or replace notarization. The source archives GitHub generates are for developers
+and are not installable Mac apps.
 
 ## Validate a source release
 
@@ -56,15 +95,41 @@ Update source URLs, version numbers, hashes, licenses and checks in
 `scripts/nearby-transfer.c` using the documented NDK version and check the source
 and both output hashes. Preserve the complete upstream notice files.
 
-## Public app downloads
+## Publish an unsigned alpha
 
-Before offering a general-use binary, implement and validate a Developer ID
-release process that signs the app and its nested macOS executables with the
-intended hardened-runtime settings, submits to Apple's notary service and staples
-the accepted ticket. Verify the distributed archive on a clean Mac. Keep signing
-certificates and notarization credentials in an appropriate private secret store.
-Publish clear architecture requirements, checksums and release notes with any
-binary release. Do not describe a locally ad-hoc-signed archive as notarized.
+The public alpha is a GitHub **prerelease**, built from its version tag using the
+release workflow on `macos-26` with Xcode 26.6. Use this toolchain to validate the
+declared macOS 26 minimum rather than distributing a local build that depends on
+a newer SDK. The app version is `0.3.3`, build `12`, for tag `v0.3.3`.
+
+The release package must contain both `arm64` and `x86_64` slices in the Nearby
+executable and every bundled macOS ADB copy. Inspect the Mach-O deployment targets
+and linked libraries, verify nested signatures and pinned Android payloads, and
+preserve the original license texts. Check the DMG and ZIP after packaging and
+generate `SHA256SUMS.txt` from those final files. Do not mutate assets after
+generating their hashes.
+
+Publish only the versioned DMG, ZIP, checksum and build-information files listed above. The app
+contains the project MIT license and third-party notices. Build directories,
+pairing records, personal diagnostics and credentials do not belong in release
+assets. Verify published hashes and URLs before enabling website download links.
+Record automated test results honestly; a universal build alone does not establish
+that Intel hardware, clean-Mac first launch or physical phone flows were tested.
+
+Keep the prerelease and its installation instructions visibly labeled unsigned
+alpha. Upgrades are manual: download a newer release, quit Nearby and replace the
+app in Applications. The alpha does not include an automatic updater.
+
+## Future Developer ID distribution
+
+A release intended to open without this alpha's per-app exception needs a
+Developer ID process: sign the app and all nested macOS executables with the
+intended hardened-runtime settings, submit to Apple's notary service, and staple
+the accepted ticket to the app and distributable disk image as appropriate.
+Verify Gatekeeper assessment and installation of the downloaded package on a
+clean Mac. Keep signing certificates and notarization credentials in a private
+secret store. An Apple Development certificate or an ad-hoc signature does not
+provide Developer ID distribution or notarization.
 
 ## GitHub Pages
 
@@ -75,8 +140,10 @@ manual workflow run, deploys the page to `https://abhinit21.github.io/nearby/`.
 
 Preview with `python3 -m http.server 8000 --directory site`. Check the page at
 mobile and desktop widths, keyboard navigation, links and assets before merging.
-The website should direct visitors to source-build instructions until a public
-binary release is available.
+The website links to a specific published alpha DMG and provides first-launch
+instructions, requirements and a link to release notes. Update these links only
+after the matching assets are available; GitHub's `releases/latest` URL may skip
+prereleases.
 
 ## Workflow maintenance
 

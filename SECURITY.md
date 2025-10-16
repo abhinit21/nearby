@@ -33,5 +33,18 @@ Bundled runtime sources, versions, hashes and notices are recorded in
 before packaging. A passing test suite or checksum does not establish that the
 software has undergone an independent security audit.
 
-Current packaged builds use local ad-hoc signatures. Developer ID signing and
-notarization are separate release work; see [release preparation](docs/release.md).
+## Downloaded alpha builds
+
+Public alpha downloads are provided through
+[this repository's GitHub Releases](https://github.com/abhinit21/nearby/releases).
+They use ad-hoc signatures for bundle integrity and are **not Developer ID signed
+or notarized by Apple**. macOS may block the initial launch. Follow the
+[installation and verification instructions](docs/release.md#install-the-alpha)
+only if you trust the official release. Do not disable Gatekeeper globally.
+
+Each release includes `SHA256SUMS.txt` for its final DMG and ZIP. Matching a hash
+checks download integrity; it does not prove safety or independently authenticate
+the publisher. Alpha releases have no guaranteed support period and no automatic
+updater. Report a security problem against the affected release and update
+manually when a fix is published. Developer ID signing and notarization remain
+future distribution work; see [releases](docs/release.md).

@@ -24,9 +24,12 @@ phone is needed for manual pairing, mirroring and sharing checks. Use a test pho
 and harmless sample files; record what you actually exercised. See
 [verification](docs/verification.md) for existing coverage and limits.
 
-The app build targets the current Mac architecture and uses ad-hoc signing for
-local development. See [release preparation](docs/release.md) before distributing
-a binary. Keep build output under `.build/` or `dist/`; both are ignored by Git.
+The default app build targets the current Mac architecture and uses ad-hoc
+signing for local development. Public alpha packages are universal builds for
+Apple silicon and Intel on macOS 26 or later, published as GitHub prereleases
+with DMG, ZIP and SHA-256 assets. They are not Developer ID signed or notarized.
+See [releases](docs/release.md) for the installation and release process. Keep
+build output under `.build/` or `dist/`; both are ignored by Git.
 
 ## Changes and review
 
