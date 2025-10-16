@@ -114,7 +114,6 @@ final class ShelfContentView: NSView {
         let effect = NSGlassEffectView(frame: MirrorLayout.dockFrame(in: bounds))
         effect.cornerRadius = 28
         effect.style = .regular
-        if #available(macOS 27, *) { effect.effectIsInteractive = true }
         let content = NSView(frame: effect.bounds)
         effect.contentView = content
         addSubview(effect)
