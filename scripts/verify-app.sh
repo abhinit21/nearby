@@ -24,12 +24,12 @@ test -s "$RUNTIME_DIR/dependency-manifest.json"
 while IFS= read -r -d '' ADB_HELPER; do
     /usr/bin/codesign --verify --strict "$ADB_HELPER"
     for ARCHITECTURE in $EXPECTED_ARCHITECTURES; do
-        /usr/bin/lipo -verify_arch "$ARCHITECTURE" "$ADB_HELPER"
+        /usr/bin/lipo "$ADB_HELPER" -verify_arch "$ARCHITECTURE"
     done
 done < <(/usr/bin/find "$APP_PATH/Contents/Resources" -type f -name adb -print0)
 if [ -n "$EXPECTED_ARCHITECTURES" ]; then
     for ARCHITECTURE in $EXPECTED_ARCHITECTURES; do
-        /usr/bin/lipo -verify_arch "$ARCHITECTURE" "$APP_PATH/Contents/MacOS/Nearby"
+        /usr/bin/lipo "$APP_PATH/Contents/MacOS/Nearby" -verify_arch "$ARCHITECTURE"
         BUILD_INFO="$(/usr/bin/xcrun vtool -arch "$ARCHITECTURE" -show-build "$APP_PATH/Contents/MacOS/Nearby")"
         printf '%s\n' "$BUILD_INFO"
         MINIMUM_OS="$(printf '%s\n' "$BUILD_INFO" | /usr/bin/awk '$1 == "minos" { print $2 }')"

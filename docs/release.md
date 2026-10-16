@@ -97,8 +97,9 @@ and both output hashes. Preserve the complete upstream notice files.
 
 ## Publish an unsigned alpha
 
-The public alpha is a GitHub **prerelease**, built from its version tag using the
-release workflow on `macos-26` with Xcode 26.6. Use this toolchain to validate the
+The public alpha is a GitHub **prerelease**, built from the exact commit recorded
+in `BUILD-INFO.txt` using the release workflow on `macos-26` with Xcode 26.6. Point
+the version tag at that verified source commit before publishing. Use this toolchain to validate the
 declared macOS 26 minimum rather than distributing a local build that depends on
 a newer SDK. The app version is `0.3.3`, build `12`, for tag `v0.3.3`.
 
@@ -109,18 +110,20 @@ preserve the original license texts. Check the DMG and ZIP after packaging and
 generate `SHA256SUMS.txt` from those final files. Do not mutate assets after
 generating their hashes.
 
-After committing and pushing the version tag, run the build workflow and download
-its verified artifact. Replace `RUN_ID` with the completed release workflow run:
+Run the build workflow against the release commit on `main` and download its
+verified artifact. Replace `RUN_ID` with the completed release workflow run:
 
 ```sh
-gh workflow run release.yml --ref v0.3.3
+gh workflow run release.yml --ref main
 gh run list --workflow release.yml
 gh run download RUN_ID -n nearby-macOS-release -D .build/nearby/release-assets
 ```
 
 The workflow builds and uploads assets for review; it does not create or publish
-a GitHub Release. Review `BUILD-INFO.txt`, run the checksum check, and publish the
-version tag as a prerelease with the verified files attached.
+a GitHub Release. Review `BUILD-INFO.txt`, run the checksum check, and create the
+version tag at that exact commit. Publish it as a prerelease with the verified
+files attached. The workflow can also build an existing version tag by using
+`--ref v0.3.3`.
 
 Publish only the versioned DMG, ZIP, checksum and build-information files listed above. The app
 contains the project MIT license and third-party notices. Build directories,
