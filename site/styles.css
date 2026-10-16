@@ -264,6 +264,19 @@ h3 {
   margin-bottom: 0;
 }
 
+.download-status {
+  max-width: 390px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 10px 0 0;
+}
+
+.download-status a,.release-note a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .hero-note span {
   margin-inline: 5px;
 }
@@ -1052,6 +1065,24 @@ h3 {
   background: #fffef4;
 }
 
+.closing-actions {
+  max-width: 300px;
+  flex-shrink: 0;
+}
+
+.closing-actions p {
+  color: #d5dfca;
+  font-size: 10px;
+  line-height: 1.8;
+  margin: 13px 0 0;
+}
+
+.closing-actions p a {
+  color: #f4f1e2;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .closing-art {
   position: absolute;
   right: 142px;
@@ -1535,14 +1566,18 @@ h3 {
     gap: 18px;
   }
   .hero .text-link {
-    font-size: 10px;
+    font-size: 12px;
   }
   .hero .button {
-    font-size: 11px;
-    padding: 15px;
+    font-size: 14px;
+    padding: 16px 20px;
+    min-height: 48px;
   }
   .hero-note {
-    font-size: 8px;
+    font-size: 10px;
+  }
+  .download-status {
+    font-size: 11px;
   }
   .workspace {
     height: 526px;
@@ -1706,6 +1741,14 @@ h3 {
     font-size: 32px;
   }
   .closing .button {
+    font-size: 14px;
+    min-height: 48px;
+  }
+  .closing-actions {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .closing-actions p {
     font-size: 11px;
   }
   .closing-art {

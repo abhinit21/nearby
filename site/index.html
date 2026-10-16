@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f6f4ed">
-    <meta name="description" content="Nearby brings your Android phone to a native Mac window over Wi-Fi. Mirror, share text, and send files. Open source for macOS 26 and Android 11 or later.">
+    <meta name="description" content="Download Nearby for Mac. Mirror Android over Wi-Fi, share text, and send files in a native Mac window. Open-source alpha for macOS 26 and Android 11 or later.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Nearby — Your Android. At home on Mac.">
-    <meta property="og:description" content="A native Mac window for your Android phone. Mirror over Wi-Fi, share text, and send files. Explore the source and build Nearby.">
+    <meta property="og:description" content="A native Mac window for your Android phone. Download the Mac alpha to mirror over Wi-Fi, share text, and send files.">
     <meta property="og:url" content="https://abhinit21.github.io/nearby/">
     <meta name="color-scheme" content="light">
     <title>Nearby — Your Android. At home on Mac.</title>
@@ -32,10 +32,11 @@
           <h1 id="hero-title">Your Android.<br>At home<br> on <em>Mac.</em></h1>
           <p class="hero-description">Keep your phone within reach.<br>Mirror Android in a native Mac window, share text, and send files. All over Wi-Fi.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="https://github.com/abhinit21/nearby">Explore the source <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#get-started">Build it on your Mac <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="https://github.com/abhinit21/nearby/releases/download/v0.3.3/Nearby-0.3.3-macOS-universal.dmg" aria-describedby="download-status">Download for Mac <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="https://github.com/abhinit21/nearby">View source on GitHub <span aria-hidden="true">↗</span></a>
           </div>
-          <p class="hero-note">macOS 26+ <span aria-hidden="true">·</span> Android 11+ <span aria-hidden="true">·</span> Same local network</p>
+          <p class="hero-note">v0.3.3 alpha <span aria-hidden="true">·</span> macOS 26+ <span aria-hidden="true">·</span> Apple silicon &amp; Intel</p>
+          <p class="download-status" id="download-status">Ad-hoc signed, not Apple-notarized. macOS may block the first launch. <a href="https://github.com/abhinit21/nearby/blob/main/docs/install.md">Installation &amp; first-open guide <span aria-hidden="true">↗</span></a></p>
         </div>
         <figure class="hero-visual">
           <div class="workspace" role="img" aria-label="Illustration of an Android phone mirrored on a Mac with a floating control dock and a completed file upload to the phone's Downloads folder.">
@@ -185,9 +186,9 @@
           <ol class="setup-steps">
             <li>
               <span class="step-number">1</span>
-              <h3>Build Nearby.</h3>
-              <p>Clone the source and build the Mac app with an Xcode toolchain, the macOS 26 SDK and Swift 6. The packaged build includes its Android tools.</p>
-              <a class="text-link" href="https://github.com/abhinit21/nearby#build-and-test">Read the build guide <span aria-hidden="true">↗</span></a>
+              <h3>Download Nearby.</h3>
+              <p>Open the downloaded DMG and drag Nearby to Applications. Open it from there. The app includes its Android tools, so there’s nothing to build.</p>
+              <a class="text-link" href="https://github.com/abhinit21/nearby/blob/main/docs/install.md">Installation &amp; first-open guide <span aria-hidden="true">↗</span></a>
             </li>
             <li>
               <span class="step-number">2</span>
@@ -202,7 +203,7 @@
           </ol>
           <div class="release-note">
             <span class="note-symbol" aria-hidden="true">i</span>
-            <p><strong>Development alpha. For builders, right now.</strong> Nearby is available as source. There isn’t a signed, notarized public app download yet. Locally packaged builds use ad-hoc signing.</p>
+            <p><strong>Development alpha · v0.3.3.</strong> This download uses ad-hoc signing and has not been notarized by Apple. If macOS blocks it, only choose Open Anyway in System Settings → Privacy &amp; Security if you trust this release. <a href="https://github.com/abhinit21/nearby/blob/main/docs/install.md">Read the installation guide.</a></p>
           </div>
         </div>
       </section>
@@ -217,6 +218,12 @@
             <summary>What do I need to connect?</summary>
             <div>
               <p>macOS 26 or later, an Android 11+ phone, and a shared local network with Wireless debugging enabled. Nearby supports QR and code pairing, with manual addresses available in Connection Help. Guest Wi-Fi, network isolation, and VPN rules can prevent discovery.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Why does macOS warn when I open Nearby?</summary>
+            <div>
+              <p>This alpha is ad-hoc signed, without a Developer ID certificate or Apple notarization. macOS cannot verify the developer or check this release through notarization. If you trust the release, follow the app-specific first-open steps in the <a href="https://github.com/abhinit21/nearby/blob/main/docs/install.md">installation guide</a>. Nearby supports Apple silicon and Intel Macs running macOS 26 or later.</p>
             </div>
           </details>
           <details>
@@ -250,7 +257,11 @@
           <p class="eyebrow">A LITTLE MORE CONNECTED.</p>
           <h2 id="closing-title">Give your Android<br>a place on your Mac.</h2>
         </div>
-        <a class="button button-light" href="https://github.com/abhinit21/nearby">Meet Nearby on GitHub <span aria-hidden="true">↗</span></a><svg class="closing-art" viewBox="0 0 240 240" aria-hidden="true"><rect x="82" y="25" width="78" height="157" rx="20"/><path d="M108 165h27M181 77c24 24 24 62 0 86m22-108c36 36 36 94 0 130M60 101c-11 11-11 29 0 40"/></svg>
+        <div class="closing-actions">
+          <a class="button button-light" href="https://github.com/abhinit21/nearby/releases/download/v0.3.3/Nearby-0.3.3-macOS-universal.dmg" aria-describedby="closing-download-status">Download for Mac <span aria-hidden="true">↓</span></a>
+          <p id="closing-download-status">v0.3.3 alpha · macOS 26+ · Apple silicon &amp; Intel<br>Ad-hoc signed, not Apple-notarized. <a href="https://github.com/abhinit21/nearby/blob/main/docs/install.md">First-open guide ↗</a></p>
+        </div>
+        <svg class="closing-art" viewBox="0 0 240 240" aria-hidden="true"><rect x="82" y="25" width="78" height="157" rx="20"/><path d="M108 165h27M181 77c24 24 24 62 0 86m22-108c36 36 36 94 0 130M60 101c-11 11-11 29 0 40"/></svg>
       </section>
     </main>
     <footer class="site-footer wrap">
